@@ -31,12 +31,10 @@ export class UpdateVehicleDto {
   @IsNumber()
   price: number;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ example: new Date(), readOnly: true })
   createdDate?: Date;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ example: new Date(), readOnly: true })
   updatedDate?: Date;
 
   @ApiProperty()

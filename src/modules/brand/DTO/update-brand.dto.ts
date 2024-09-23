@@ -10,11 +10,9 @@ export class UpdateBrandDto {
   @IsNotEmpty()
   id: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ example: new Date(), readOnly: true })
   createdDate: Date;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ example: new Date(), readOnly: true })
   updatedDate: Date;
 }

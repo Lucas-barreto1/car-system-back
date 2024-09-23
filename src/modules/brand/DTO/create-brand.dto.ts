@@ -6,11 +6,9 @@ export class CreateBrandDto {
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ example: new Date(), readOnly: true })
   createdDate: Date;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ example: new Date(), readOnly: true })
   updatedDate: Date;
 }

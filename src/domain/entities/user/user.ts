@@ -9,8 +9,6 @@ export type UserInput = {
   password: string;
   createDate?: Date;
   updatedDate?: Date;
-  lastLogin?: Date;
-  hashRefreshToken?: string;
   roles?: string[];
 };
 

@@ -30,7 +30,7 @@ export class BrandController {
     private readonly deleteBrand: DeleteBrand,
   ) {}
 
-  @Post('create-brand')
+  @Post()
   @Authorize(roles.ADMIN)
   create(@Body() createBrandDto: CreateBrandDto) {
     return this.createBrand
@@ -43,7 +43,7 @@ export class BrandController {
       });
   }
 
-  @Get('list-brands')
+  @Get()
   findAll() {
     return this.findAllBrands
       .execute()
@@ -55,7 +55,7 @@ export class BrandController {
       });
   }
 
-  @Get('find-brand/:id')
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.findOneBrand
       .execute(id)
@@ -67,7 +67,7 @@ export class BrandController {
       });
   }
 
-  @Put('update-brand')
+  @Put()
   @Authorize(roles.ADMIN)
   update(@Body() updateBrandDto: UpdateBrandDto) {
     return this.updateBrand
@@ -80,7 +80,7 @@ export class BrandController {
       });
   }
 
-  @Delete('delete-brand/:id')
+  @Delete(':id')
   @Authorize(roles.ADMIN)
   delete(@Param('id') id: string) {
     return this.deleteBrand
