@@ -5,18 +5,18 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
     .setTitle('Car System')
     .setDescription('The car system API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  app.setGlobalPrefix('api');
-  SwaggerModule.setup('api', app, document);
-
-  app.useGlobalPipes(new ValidationPipe());
+  SwaggerModule.setup('swagger', app, document);
   await app.listen(3000);
 }
 bootstrap();
