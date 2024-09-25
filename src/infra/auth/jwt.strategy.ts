@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import {
@@ -9,7 +10,11 @@ import { TokenPayload } from 'src/application/services/auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor(@Inject(USER_REPOSITORY) private userRepository: UserRepository) {
+  constructor(
+    @Inject(USER_REPOSITORY)
+    private userRepository: UserRepository,
+    private readonly jwtService: JwtService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -18,8 +23,24 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  async validate(payload: TokenPayload) {
-    const user = await this.userRepository.findUserById(payload.id);
-    return user;
+  async validate(req: any) {
+    const authHeaders = req.headers.authorization;
+    if (authHeaders && (authHeaders as string).split(' ')[1]) {
+      const token = (authHeaders as string).split(' ')[1];
+
+      const decoded = (await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SECRET,
+      })) as TokenPayload;
+
+      const user = await this.userRepository.findUserById(decoded.id);
+
+      if (!user) {
+        throw new HttpException('User not found.', HttpStatus.UNAUTHORIZED);
+      }
+
+      return user;
+    } else {
+      throw new HttpException('Not authorized.', HttpStatus.UNAUTHORIZED);
+    }
   }
 }

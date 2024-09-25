@@ -4,14 +4,14 @@
  */
 exports.up = function (knex) {
   return knex.schema.createTable('vehicles', function (table) {
-    table.uuid('id').primary(); // UUID para a chave primária
-    table.string('model').notNullable(); // Modelo do veículo
-    table.string('make').notNullable(); // Marca do veículo
-    table.integer('year').notNullable(); // Ano do veículo
-    table.string('color').notNullable(); // Cor do veículo
-    table.decimal('price').notNullable(); // Preço do veículo
-    table.timestamp('created_date').defaultTo(knex.fn.now()); // Data de criação
-    table.timestamp('updated_date').defaultTo(knex.fn.now()); // Data de atualização
+    table.uuid('id').primary();
+    table.string('model').notNullable();
+    table.string('make').notNullable();
+    table.integer('year').notNullable();
+    table.string('color').notNullable();
+    table.decimal('price').notNullable();
+    table.timestamp('created_date').defaultTo(knex.fn.now());
+    table.timestamp('updated_date').defaultTo(knex.fn.now());
     table
       .uuid('brand_id')
       .references('id')

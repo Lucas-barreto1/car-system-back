@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { USER_REPOSITORY } from 'src/application/repositories/user.repository';
-import { UserRepositoryMemory } from 'src/infra/repositories/memory/user/user.repository.memory';
+import { UserRepositoryPostgres } from 'src/infra/repositories/postgres/user/user.repository.postgres';
 
 const repositories = [
   {
     provide: USER_REPOSITORY,
-    useClass: UserRepositoryMemory,
+    useClass: UserRepositoryPostgres,
   },
 ];
 

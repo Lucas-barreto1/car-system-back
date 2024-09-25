@@ -5,7 +5,7 @@ import { DeleteBrand } from 'src/application/usecases/brand/delete-brand';
 import { FindAllBrands } from 'src/application/usecases/brand/find-all-brands';
 import { FindOneBrand } from 'src/application/usecases/brand/find-one-brand';
 import { UpdateBrand } from 'src/application/usecases/brand/update-brand';
-import { BrandRepositoryMemory } from 'src/infra/repositories/memory/brand/brand.repository.memory';
+import { BrandRepositoryPostgres } from 'src/infra/repositories/postgres/brand/brand.repository.postgres';
 import { BrandController } from './controllers/brand.controller';
 
 const usecases = [
@@ -19,7 +19,7 @@ const usecases = [
 const repositories = [
   {
     provide: BRAND_REPOSITORY,
-    useClass: BrandRepositoryMemory,
+    useClass: BrandRepositoryPostgres,
   },
 ];
 

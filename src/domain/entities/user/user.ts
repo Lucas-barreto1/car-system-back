@@ -6,10 +6,19 @@ export type UserInput = {
   id?: string;
   email: string;
   name: string;
-  password: string;
+  password?: string;
   createDate?: Date;
   updatedDate?: Date;
   roles?: string[];
+};
+
+export type UserDatabaseInput = {
+  id: string;
+  email: string;
+  name: string;
+  roles?: string[];
+  createDate: Date;
+  updatedDate: Date;
 };
 
 export class User {
@@ -30,6 +39,17 @@ export class User {
     this.createDate = userInput.createDate || new Date();
     this.updatedDate = userInput.updatedDate || new Date();
     this.roles = userInput.roles || [];
+  }
+
+  static restoreFromDatabase(userInput: UserDatabaseInput) {
+    return new User({
+      id: userInput.id,
+      email: userInput.email,
+      name: userInput.name,
+      roles: userInput.roles || [],
+      createDate: userInput.createDate || new Date(),
+      updatedDate: userInput.updatedDate || new Date(),
+    });
   }
 
   getRoles() {
